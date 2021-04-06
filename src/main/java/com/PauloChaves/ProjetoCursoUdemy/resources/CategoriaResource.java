@@ -1,7 +1,11 @@
 package com.PauloChaves.ProjetoCursoUdemy.resources;
 
 import com.PauloChaves.ProjetoCursoUdemy.entities.Categoria;
+import com.PauloChaves.ProjetoCursoUdemy.services.CategoriaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,16 +16,13 @@ import java.util.List;
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
 
-    @GetMapping
-    public List<Categoria> listar(){
+    @Autowired
+    private CategoriaService service;
 
-        Categoria cat1 = new Categoria(1L,"Informatica");
-        Categoria cat2 = new Categoria(2L,"Escritorio");
+    @GetMapping(value="{id}")
+    public ResponseEntity<Categoria> findById(@PathVariable Long id){
+        Categoria obj = service.buscar(id);
 
-        List<Categoria> lista = new ArrayList<>();
-        lista.add(cat1);
-        lista.add(cat2);
-
-        return lista;
+        return ResponseEntity.ok().body(obj);
     }
 }
