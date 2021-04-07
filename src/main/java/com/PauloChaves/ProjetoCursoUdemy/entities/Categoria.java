@@ -1,6 +1,5 @@
 package com.PauloChaves.ProjetoCursoUdemy.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +9,7 @@ import java.util.Objects;
 @Entity
 public class Categoria {
 
+    //@JsonManagedReference
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
