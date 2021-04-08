@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -15,7 +16,7 @@ public class CategoriaService {
     @Autowired
     private CategoriaRepository repo;
 
-    public Categoria buscar(Long id){
+    public Categoria find(Long id){
             Optional<Categoria> obj = repo.findById(id);
             return obj.orElseThrow(() -> new ObjectNotFoundException(
                     "Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
@@ -25,6 +26,20 @@ public class CategoriaService {
         obj.setId(null);
         return repo.save(obj);
      }
+    public Categoria update(Long id,Categoria obj){
+        try {
+            Categoria entity = repo.getOne(id);
+            updateData(entity, obj);
+            return repo.save(entity);
+        }catch (EntityNotFoundException e){
+            throw new ObjectNotFoundException(
+                    "Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName());
+        }
+    }
+
+    private void updateData(Categoria entity, Categoria obj) {
+        entity.setNome(obj.getNome());
+    }
 
 
     }
