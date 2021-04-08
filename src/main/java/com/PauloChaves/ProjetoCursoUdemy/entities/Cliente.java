@@ -1,6 +1,7 @@
 package com.PauloChaves.ProjetoCursoUdemy.entities;
 
 import com.PauloChaves.ProjetoCursoUdemy.entities.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.*;
@@ -23,6 +24,7 @@ public class Cliente {
     @CollectionTable(name = "TELEFONE")
     private Set<String> telefones = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
 

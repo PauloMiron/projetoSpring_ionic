@@ -1,4 +1,6 @@
 package com.PauloChaves.ProjetoCursoUdemy.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import java.util.Objects;
@@ -6,6 +8,7 @@ import java.util.Objects;
 @Entity
 public class ItemPedido {
 
+    @JsonIgnore
     @EmbeddedId
     private ItemPedido_PK id = new ItemPedido_PK();
     private Double desconto;
@@ -22,6 +25,7 @@ public class ItemPedido {
         this.preco = preco;
     }
 
+    @JsonIgnore
     public Pedido getPedido(){
         return id.getPedido();
     }
