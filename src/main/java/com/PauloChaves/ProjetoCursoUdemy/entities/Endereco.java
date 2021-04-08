@@ -1,6 +1,7 @@
 package com.PauloChaves.ProjetoCursoUdemy.entities;
 
 import com.PauloChaves.ProjetoCursoUdemy.entities.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -17,6 +18,7 @@ public class Endereco {
     private String bairro;
     private String cep;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="cliente_id")
     private Cliente cliente;
