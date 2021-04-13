@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +25,10 @@ public class CategoriaService {
             return obj.orElseThrow(() -> new ObjectNotFoundException(
                     "Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
         }
+
+    public List<Categoria> fildAll(){
+        return repo.findAll();
+    }
 
      public Categoria insert(Categoria obj){
         obj.setId(null);
