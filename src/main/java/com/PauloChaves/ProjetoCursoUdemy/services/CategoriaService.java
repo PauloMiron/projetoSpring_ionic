@@ -1,5 +1,6 @@
 package com.PauloChaves.ProjetoCursoUdemy.services;
 
+import com.PauloChaves.ProjetoCursoUdemy.dto.CategoriaDTO;
 import com.PauloChaves.ProjetoCursoUdemy.entities.Categoria;
 import com.PauloChaves.ProjetoCursoUdemy.repository.CategoriaRepository;
 import com.PauloChaves.ProjetoCursoUdemy.services.exception.DatabaseExceptions;
@@ -67,6 +68,9 @@ public class CategoriaService {
         return repo.findAll(pageRequest);
     }
 
+    public Categoria fromDTO(CategoriaDTO objDto){
+        return new Categoria(objDto.getId(),objDto.getNome());
+    }
 
     }
 

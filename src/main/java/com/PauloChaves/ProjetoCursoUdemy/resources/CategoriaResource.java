@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class CategoriaResource {
             @RequestParam (value = "direction",defaultValue = "ASC")String direction){
         Page<Categoria> list = service.findPage(page,LinesPerPage,orderBy,direction);
         Page<CategoriaDTO> listDto = list.map(obj -> new CategoriaDTO(obj));
-        
+
         return ResponseEntity.ok().body(listDto);
     }
 
@@ -47,13 +48,15 @@ public class CategoriaResource {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> insert(@RequestBody Categoria obj){
+    public ResponseEntity<Categoria> insert(@Valid @RequestBody CategoriaDTO objDto){
+        Categoria obj = service.fromDTO(objDto);
         obj =  service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).body(obj);
     }
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Categoria> update(@PathVariable Long id,@RequestBody Categoria obj){
+    public ResponseEntity<Categoria> update(@PathVariable Long id,@Valid @RequestBody CategoriaDTO objDto){
+        Categoria obj = service.fromDTO(objDto);
         obj = service.update(id,obj);
         return ResponseEntity.ok().body(obj);
     }
