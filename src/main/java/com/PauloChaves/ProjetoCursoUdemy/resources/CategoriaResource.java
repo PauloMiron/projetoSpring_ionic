@@ -29,7 +29,7 @@ public class CategoriaResource {
     }
 
     @GetMapping(value="/page")
-    public ResponseEntity<Page<CategoriaDTO>> fildPage(
+    public ResponseEntity<Page<CategoriaDTO>> findPage(
             @RequestParam (value = "page",defaultValue = "0")Integer page,
             @RequestParam (value = "linesPerPage",defaultValue = "24")Integer LinesPerPage,
             @RequestParam (value = "orderBy",defaultValue = "nome")String orderBy,
