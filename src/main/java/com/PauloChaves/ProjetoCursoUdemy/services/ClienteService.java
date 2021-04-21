@@ -72,7 +72,7 @@ public class ClienteService {
         }catch (EmptyResultDataAccessException e){
             throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName());
         }catch (DataIntegrityViolationException e){
-            throw new DatabaseExceptions("Não é possível excluir uma categoria que possui produtos");
+            throw new DatabaseExceptions("Não é possível excluir existe entidades relacionadas");
         }
     }
 
