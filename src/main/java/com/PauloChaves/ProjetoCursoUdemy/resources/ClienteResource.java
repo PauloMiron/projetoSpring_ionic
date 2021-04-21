@@ -2,6 +2,7 @@ package com.PauloChaves.ProjetoCursoUdemy.resources;
 
 
 import com.PauloChaves.ProjetoCursoUdemy.dto.ClienteDTO;
+import com.PauloChaves.ProjetoCursoUdemy.dto.ClienteNewDTO;
 import com.PauloChaves.ProjetoCursoUdemy.entities.Cliente;
 import com.PauloChaves.ProjetoCursoUdemy.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class ClienteResource {
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> insert(@Valid @RequestBody ClienteDTO objDto){
+    public ResponseEntity<Cliente> insert(@Valid @RequestBody ClienteNewDTO objDto){
         Cliente obj = service.fromDTO(objDto);
         obj =  service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(obj.getId()).toUri();
