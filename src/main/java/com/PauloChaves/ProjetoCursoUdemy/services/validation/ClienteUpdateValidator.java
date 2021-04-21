@@ -1,39 +1,43 @@
 package com.PauloChaves.ProjetoCursoUdemy.services.validation;
 
-import com.PauloChaves.ProjetoCursoUdemy.dto.ClienteNewDTO;
+import com.PauloChaves.ProjetoCursoUdemy.dto.ClienteDTO;
 import com.PauloChaves.ProjetoCursoUdemy.entities.Cliente;
-import com.PauloChaves.ProjetoCursoUdemy.entities.enums.TipoCliente;
 import com.PauloChaves.ProjetoCursoUdemy.repository.ClienteRepository;
 import com.PauloChaves.ProjetoCursoUdemy.resources.exception.FieldMessage;
-import com.PauloChaves.ProjetoCursoUdemy.services.validation.utils.BR;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.HandlerMapping;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Handler;
 
-public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
+public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate, ClienteDTO> {
+
+    @Autowired
+    private HttpServletRequest request;
 
     @Autowired
     private ClienteRepository clienteRepository;
 
-    @Override public void initialize(ClienteInsert ann) {
+    @Override public void initialize(ClienteUpdate ann) {
     }
     @Override
-    public boolean isValid(ClienteNewDTO objDto, ConstraintValidatorContext context) {
+    public boolean isValid(ClienteDTO objDto, ConstraintValidatorContext context) {
+
+        Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+
+        Integer uriId = Integer.parseInt(map.get("id"));
 
         List<FieldMessage> list = new ArrayList<>();
 
-        if (objDto.getTipo().equals(TipoCliente.PESSOAFISICA.getCod()) && !BR.isValidCpf(objDto.getCpfOuCnpj())){
-            list.add(new FieldMessage("cpfOuCnpj","CPF invalido"));
-        }
-        if (objDto.getTipo().equals(TipoCliente.PESSOAJURIDICA.getCod()) && !BR.isValidCnpj(objDto.getCpfOuCnpj())){
-            list.add(new FieldMessage("cpfOuCnpj","CNPJ invalido"));
-        }
 
         Cliente aux = clienteRepository.findByEmail(objDto.getEmail());
-        if(aux != null){
+        if(aux != null && !aux.getId().equals(uriId)){
             list.add(new FieldMessage("email","Email já existente"));
         }
 
