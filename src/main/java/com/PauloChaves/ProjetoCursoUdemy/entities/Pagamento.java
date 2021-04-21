@@ -23,7 +23,7 @@ public abstract class Pagamento {
 
     public Pagamento(Long id, EstadoPagamento estado, Pedido pedido) {
         this.id = id;
-        this.estado = estado.getCod();
+        this.estado = (estado == null) ? null : estado.getCod();
         this.pedido = pedido;
     }
 
