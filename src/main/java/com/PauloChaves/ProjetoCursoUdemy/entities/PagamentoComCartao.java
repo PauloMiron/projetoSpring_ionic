@@ -1,11 +1,14 @@
 package com.PauloChaves.ProjetoCursoUdemy.entities;
 
 import com.PauloChaves.ProjetoCursoUdemy.entities.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import javax.persistence.Entity;
 
 @Entity
+@JsonTypeName("pagamentoComCartao")
 public class PagamentoComCartao extends Pagamento{
+    private static final long serialVersionUID = 1L;
 
     private Integer numeroDeParcelas;
 
