@@ -3,6 +3,7 @@ package com.PauloChaves.ProjetoCursoUdemy;
 import com.PauloChaves.ProjetoCursoUdemy.services.DBservice;
 import com.PauloChaves.ProjetoCursoUdemy.services.EmailService;
 import com.PauloChaves.ProjetoCursoUdemy.services.MockEmailService;
+import com.PauloChaves.ProjetoCursoUdemy.services.SmtpEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +31,6 @@ public class TesteConfig {
     public EmailService emailService(){
         return new MockEmailService();
     }
-
 
     }
 

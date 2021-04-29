@@ -1,6 +1,8 @@
 package com.PauloChaves.ProjetoCursoUdemy;
 
 import com.PauloChaves.ProjetoCursoUdemy.services.DBservice;
+import com.PauloChaves.ProjetoCursoUdemy.services.EmailService;
+import com.PauloChaves.ProjetoCursoUdemy.services.SmtpEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +33,12 @@ public class DevConfig {
         return true;
     }
 
-
+    @Bean
+    public EmailService emailService(){
+        return new SmtpEmailService();
     }
+
+
+
+}
 
