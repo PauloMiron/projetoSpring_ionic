@@ -30,7 +30,8 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
 
     private static final String[] PUBLIC_MATCHES_GET = {
             "/produtos/**",
-            "/categorias/**"
+            "/categorias/**",
+            "/clientes/**"
     };
 
     @Override
