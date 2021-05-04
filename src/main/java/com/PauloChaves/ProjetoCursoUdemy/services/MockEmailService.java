@@ -15,11 +15,11 @@ public class MockEmailService extends AbstractEmailService{
         LOG.info(msg.toString());
         LOG.info("Enviado");
     }
-
+/*
     @Override
     public void sendHtmlEmail(MimeMessage msg) {
         LOG.info("Simulando envio de email");
         LOG.info(msg.toString());
         LOG.info("Enviado");
-    }
+    }*/
 }
