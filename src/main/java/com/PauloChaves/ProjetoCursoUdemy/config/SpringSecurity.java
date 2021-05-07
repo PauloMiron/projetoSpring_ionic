@@ -1,6 +1,7 @@
 package com.PauloChaves.ProjetoCursoUdemy.config;
 
 import com.PauloChaves.ProjetoCursoUdemy.security.JWTAuthenticationFilter;
+import com.PauloChaves.ProjetoCursoUdemy.security.JWTAuthorizationFilter;
 import com.PauloChaves.ProjetoCursoUdemy.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -54,6 +55,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(PUBLIC_MATCHES).permitAll()
                 .anyRequest().authenticated();
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+        http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil,userDetailsService));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
