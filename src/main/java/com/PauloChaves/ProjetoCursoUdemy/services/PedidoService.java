@@ -6,11 +6,19 @@ import com.PauloChaves.ProjetoCursoUdemy.repository.ItemPedidoRepository;
 import com.PauloChaves.ProjetoCursoUdemy.repository.PagamentoRepository;
 import com.PauloChaves.ProjetoCursoUdemy.repository.PedidoRepository;
 import com.PauloChaves.ProjetoCursoUdemy.repository.ProdutoRepository;
+import com.PauloChaves.ProjetoCursoUdemy.security.UserSS;
+import com.PauloChaves.ProjetoCursoUdemy.services.exception.AuthorizationExceptions;
 import com.PauloChaves.ProjetoCursoUdemy.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -64,8 +72,17 @@ public class PedidoService {
         itemPedidoRepository.saveAll(obj.getItens());
         emailService.sendOrderConfirmationEmail(obj);
         return obj;
+    }
 
+    public Page<Pedido> findPage(Integer page, Integer LinesPerPage, String orderBy, String direction){
 
+        UserSS user = UserService.authenticated();
+        if (user == null){
+            throw new AuthorizationExceptions("Acesso Negado");
+        }
+        PageRequest pageRequest = PageRequest.of(page,LinesPerPage, Sort.Direction.valueOf(direction),orderBy);
+        Cliente cliente = clienteService.find(user.getId());
+        return repo.findByCliente(cliente,pageRequest);
     }
 
 }
