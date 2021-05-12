@@ -23,13 +23,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ClienteService {
+
+    @Autowired
+    S3Service s3Service;
     @Autowired
     private BCryptPasswordEncoder pe;
 
@@ -109,8 +114,11 @@ public class ClienteService {
         if (objDto.getTelefone3()!= null){
             cli.getTelefones().add(objDto.getTelefone3());
         }
-
         return cli;
+    }
+
+    public URI uploadProfilePicture(MultipartFile multipartFile){
+        return s3Service.uploadFile(multipartFile);
     }
 }
 
