@@ -15,6 +15,7 @@ import com.PauloChaves.ProjetoCursoUdemy.services.exception.AuthorizationExcepti
 import com.PauloChaves.ProjetoCursoUdemy.services.exception.DatabaseExceptions;
 import com.PauloChaves.ProjetoCursoUdemy.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +45,12 @@ public class ClienteService {
 
     @Autowired
     private EnderecoRepository enderecoRepository;
+
+    @Autowired
+    private ImageService imageService;
+
+    @Value("${img.prefix.client.profile}")
+    private String prefix;
 
     public Cliente find(Long id){
 
@@ -123,14 +131,15 @@ public class ClienteService {
             throw new AuthorizationExceptions("Acesso negado");
         }
 
+        BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+
+
         URI uri = s3Service.uploadFile(multipartFile);
 
-        Cliente cli = find(user.getId());
-        cli.setImageUrl(uri.toString());
-        repo.save(cli);
+        String fileName = prefix + user.getId() + ".jpg";
 
+        return s3Service.uploadFile(imageService.getInputStream(jpgImage,"jpg"),fileName,"image");
 
-        return uri;
     }
 }
 
