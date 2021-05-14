@@ -47,7 +47,6 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
 
     private static final String[] PUBLIC_MATCHES_POST = {
             "/clientes",
-            "/clientes/picture",
             "/auth/forgot/**"
     };
 
